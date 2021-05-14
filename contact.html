@@ -165,8 +165,8 @@
                        <div class="col-md-12">
                             <div class="md-form mb-0">
                               <label for="subject" class="">Subject</label>
-                                <input type="text" id="subject" name="subject" class="form-control" required>
-                                
+                                <input type="text" onkeyup="subValidation()" id="subject" name="subject" class="form-control" required>
+                                <p id="sub-alert" style="color: red;"></p>
                             </div>
                         </div>
                     </div>
@@ -180,7 +180,8 @@
       
                             <div class="md-form">
                               <label for="message">Your message</label>
-                                <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea> 
+                                <textarea type="text" onkeyup="msgValidation()" id="message" name="message" rows="2" class="form-control md-textarea" required></textarea> 
+                                <p id="msg-alert" style="color: red;"></p>
                                 <div class="text-center pt-3">                                         
                                 <input type="submit" value="submit" >
                               </div>      
@@ -283,23 +284,25 @@
   <script src="assets/js/main.js"></script>
 
   <script>
-    var  flag1 = false;
+    var flag1 = false;
     var flag2 =false;
-    var flag3=false;
-  
-      function nameValidation(){
+    var flag3 =false;
+    var flag4 =false;
+    var flag5 =false;
+    
+    function nameValidation(){
         var pattern = /^[ A-Za-z]+$/;
         var name = document.getElementById("fname").value;
-        if(name.match(pattern))
+        if(!name.match(pattern)|| name === null || name.trim() === "")
         {
-            document.getElementById("name-alert").innerHTML=""
-            flag1=true
-          }else{
             document.getElementById("name-alert").innerHTML="Invalid Name"
             flag1=false
+          }else{
+            
+            document.getElementById("name-alert").innerHTML=""
+            flag1=true
           }
       }
-  
   
   
       function phoneNumberValidate(){
@@ -331,12 +334,42 @@
          flag3=false
        }
          }
+
+      function subValidation(){
+       
+       var sub = document.getElementById('subject').value;
+       var subAlert = document.getElementById('sub-alert');
+       if(sub === null || sub.trim() === ""){
+         subAlert.innerHTML="invalid subject";
+         flag4=false
+       }else{         
+         subAlert.innerHTML="";
+         flag4=true
+       }
+         }
+
+
+
+         function msgValidation(){
+       
+       var msg = document.getElementById('message').value;
+       var msgAlert = document.getElementById('msg-alert');
+       if(msg === null || msg.trim() === ""){
+         msgAlert.innerHTML="invalid subject";
+         flag5=false
+       }else{         
+         msgAlert.innerHTML="";
+         flag5=true
+       }
+         }
+
+      
   
       
       
   
     function checkValidate(){
-      if(flag1==true&& flag2==true&& flag3==true){
+      if(flag1==true&& flag2==true&& flag3==true&& flag4==true&& flag4==true){
         return true;
       }else{
         alert("Check Form Data");
